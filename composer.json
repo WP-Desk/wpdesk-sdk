@@ -12,16 +12,26 @@
     "wpdesk/wp-plugin-flow": "^2.4.0",
     "humbug/php-scoper": "0.12.3"
   },
+  "autoload": {
+    "psr-4": {
+      "WPDesk\\ExternalScripts\\": "scripts/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
   },
   "scripts": {
-    "post-install-cmd": [
+    "post-create-project-cmd": [
+      "WPDesk\\ExternalScripts\\BuilderScript::build_env",
       "rm -rf ./wpdesk-integration",
       "cp -f ./Reflector.php wpdesk-integration-vendor/humbug/php-scoper/src",
       "./wpdesk-integration-vendor/bin/php-scoper add-prefix --output-dir=./wpdesk-integration -f",
-      "rm -rf ./wpdesk-integration-vendor"
+      "cp -f ./composer-integration.json wpdesk-integration/composer.json",
+      "composer install -d wpdesk-integration",
+      "composer dump -d wpdesk-integration -o",
+      "rm -rf ./wpdesk-integration-vendor ./wpdesk-integration/composer.json ./scripts ./src ./.gitignore ./*.lock ./*.json ./*.php",
+      "WPDesk\\ExternalScripts\\BuilderScript::info"
     ]
   }
 }
