@@ -1,0 +1,27 @@
+{
+  "name": "wpdesk/wpdesk-external-integration",
+  "description": "",
+  "type": "project",
+  "config": {
+    "vendor-dir": "wpdesk-integration-vendor"
+  },
+  "require-dev": {
+    "wpdesk/wp-wpdesk-helper-override": "^1.1.0",
+    "psr/log": "^1.0.1",
+    "wpdesk/wp-wpdesk-helper": "^2.3.4",
+    "wpdesk/wp-plugin-flow": "^2.4.0",
+    "humbug/php-scoper": "0.12.3"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "rm -rf ./wpdesk-integration",
+      "cp -f ./Reflector.php wpdesk-integration-vendor/humbug/php-scoper/src",
+      "./wpdesk-integration-vendor/bin/php-scoper add-prefix --output-dir=./wpdesk-integration -f",
+      "rm -rf ./wpdesk-integration-vendor"
+    ]
+  }
+}
