@@ -5,6 +5,9 @@ namespace WPDesk\ExternalScripts;
 use Composer\Script\Event;
 
 class BuilderScript {
+	/** @var string */
+	private static $plugin_dir;
+
 	public static function build_env( Event $event ) {
 		$io             = $event->getIO();
 		$scopeNamespace = $io->ask( 'Podaj unikalny identyfikator przestrzeni nazw w formacie camelCase: ' );
@@ -12,22 +15,26 @@ class BuilderScript {
 
 		$product_id     = $io->ask( 'Podaj unikalny identyfikator produktu uzgodniony z WP Desk: ' );
 		self::file_regex_replace(__DIR__ . "/../wpdesk-integration.php", '/\$product_id[ ]*=[ ]*\'[^\']*\';/', '$product_id = ' . "'{$product_id}';");
-		$plugin_dir = $io->ask( 'Podaj nazwę katalogu w którym znajduje się wtyczka: ' );
-		$plugin_dir = trim( basename( $plugin_dir ), ' /' );
-		self::file_regex_replace(__DIR__ . "/../wpdesk-integration.php", '/\$plugin_dir[ ]*=[ ]*\'[^\']*\';/', '$plugin_dir = ' . "'{$plugin_dir}';");
+		self::$plugin_dir = rtrim($io->ask( 'Podaj pełną absolutną ścieżkę do katalogu w którym znajduje się wtyczka: ' ), ' /');
+		$basename_plugin_dir = basename( self::$plugin_dir );
+		self::file_regex_replace(__DIR__ . "/../wpdesk-integration.php", '/\$plugin_dir[ ]*=[ ]*\'[^\']*\';/', '$plugin_dir = ' . "'{$basename_plugin_dir}';");;
+	}
+
+	public static function copy_to_plugin() {
+		$plugin_dir = self::$plugin_dir;
+		$integration_dir = __DIR__ . '/../wpdesk-integration';;
+		exec("cp -rf {$integration_dir} {$plugin_dir}/");
 	}
 
 	public static function info( Event $event ) {
 		$io = $event->getIO();
 		$io->write( "\n
 -----------------------------------------------------------
-1. Przenieś utworzony katalog o nazwie wpdesk-integration do katalogu swojej wtyczki. 
-2. Dodaj we wtyczce kod PHP:
+Dodaj we wtyczce kod PHP:
 
 require_once __DIR__ . '/wpdesk-integration/wpdesk-integration.php';
 
 aby uruchomić integrację z systemem sprzedażowym WP Desk.
-3. Dodatkowo w pliku wpdesk-integration.php w linii 15 opcjonalnie można dodać kod który zostanie uruchomiony jeśli subskrypcja wtyczki została poprawnie aktywowana.
 		" );
 	}
 

@@ -7,6 +7,7 @@ use WPDesk\Helper\PrefixedHelperAsLibrary;
 use WPDesk\License\PluginRegistrator;
 use WPDesk\Plugin\Flow\Initialization\PluginDisablerByFileTrait;
 use WPDesk\Plugin\Flow\Initialization\Simple\HelperInstanceAsFilterTrait;
+use WPDesk_Plugin_Info;
 
 class ExternalIntegration {
 	use HelperInstanceAsFilterTrait;

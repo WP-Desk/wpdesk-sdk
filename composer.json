@@ -5,9 +5,10 @@
   "config": {
     "vendor-dir": "wpdesk-integration-vendor"
   },
+  "require": {
+    "php": ">=7.2"
+  },
   "require-dev": {
-    "wpdesk/wp-wpdesk-helper-override": "^1.1.0",
-    "psr/log": "^1.0.1",
     "wpdesk/wp-wpdesk-helper": "^2.3.4",
     "wpdesk/wp-plugin-flow": "^2.4.0",
     "humbug/php-scoper": "0.12.3"
@@ -19,8 +20,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "require": {
-  },
   "scripts": {
     "post-create-project-cmd": [
       "WPDesk\\ExternalScripts\\BuilderScript::build_env",
@@ -30,7 +29,8 @@
       "cp -f ./composer-integration.json wpdesk-integration/composer.json",
       "composer install -d wpdesk-integration",
       "composer dump -d wpdesk-integration -o",
-      "rm -rf ./wpdesk-integration-vendor ./wpdesk-integration/composer.json ./scripts ./src ./.gitignore ./*.lock ./*.json ./*.php",
+      "rm -rf ./wpdesk-integration/composer.json ./wpdesk-integration/composer.lock",
+      "WPDesk\\ExternalScripts\\BuilderScript::copy_to_plugin",
       "WPDesk\\ExternalScripts\\BuilderScript::info"
     ]
   }
