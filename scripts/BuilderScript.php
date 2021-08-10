@@ -17,7 +17,9 @@ class BuilderScript {
 		self::file_regex_replace(__DIR__ . "/../wpdesk-integration.php", '/\$product_id[ ]*=[ ]*\'[^\']*\';/', '$product_id = ' . "'{$product_id}';");
 		self::$plugin_dir = rtrim($io->ask( 'Podaj pełną absolutną ścieżkę do katalogu w którym znajduje się wtyczka: ' ), ' /');
 		$basename_plugin_dir = basename( self::$plugin_dir );
-		self::file_regex_replace(__DIR__ . "/../wpdesk-integration.php", '/\$plugin_dir[ ]*=[ ]*\'[^\']*\';/', '$plugin_dir = ' . "'{$basename_plugin_dir}';");;
+		self::file_regex_replace(__DIR__ . "/../wpdesk-integration.php", '/\$plugin_dir[ ]*=[ ]*\'[^\']*\';/', '$plugin_dir = ' . "'{$basename_plugin_dir}';");
+		$plugin_file = rtrim($io->ask( 'Podaj nazwę głównego pliku wtyczki: ' ), ' /');
+		self::file_regex_replace(__DIR__ . "/../wpdesk-integration.php", '/\$plugin_filename[ ]*=[ ]*\'[^\']*\';/', '$plugin_filename = ' . "'{$plugin_file}';");
 	}
 
 	public static function copy_to_plugin() {

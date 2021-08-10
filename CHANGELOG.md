@@ -1,4 +1,11 @@
-## [1.1.0] - 2021-04-23
+## [1.2.0] - 2020-07-10
+### Fixed
+- Error in update request
+- Error in plugin option storage
+### Changed
+- Library update
+
+## [1.1.0] - 2020-04-23
 ### Added
 - Composer 2 support
 ### Changed
