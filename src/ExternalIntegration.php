@@ -24,10 +24,12 @@ class ExternalIntegration {
 	 * @param string $plugin_dir
 	 * @param callback $activate_callback
 	 */
-	public static function integrate( $product_id, $plugin_dir, $activate_callback ) {
+	public static function integrate( $product_id, $plugin_dir, $filename, $plugin_version, $activate_callback ) {
 		$external_plugin_info = new WPDesk_Plugin_Info();
 		$external_plugin_info->set_product_id( $product_id );
 		$external_plugin_info->set_plugin_dir( $plugin_dir );
+		$external_plugin_info->set_plugin_file_name($filename);
+		$external_plugin_info->set_version($plugin_version);
 
 		( new self( $external_plugin_info ) )->run_init( $activate_callback );
 	}
