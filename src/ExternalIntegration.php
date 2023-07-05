@@ -30,7 +30,9 @@ class ExternalIntegration {
 	private function run_init(): void {
 		if ( apply_filters( 'wpdesk_can_register_plugin', true, $this->plugin_info ) ) {
 			$registrator = new PluginRegistrator( $this->plugin_info );
-			$registrator->initialize_license_manager();
+			add_action('plugins_loaded', function() use ($registrator) {
+				$registrator->initialize_license_manager();
+			}, 9999);
 		}
 	}
 }

@@ -1,3 +1,7 @@
+## [1.3.1] - 2023-06-05
+### Fixed
+- Start license system after plugins loaded
+
 ## [1.3.0] - 2023-06-05
 ### Changed
 - Plugin flow ^3
