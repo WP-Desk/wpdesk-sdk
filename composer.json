@@ -3,15 +3,18 @@
   "description": "",
   "type": "project",
   "config": {
-    "vendor-dir": "wpdesk-integration-vendor"
+    "vendor-dir": "wpdesk-integration-vendor",
+    "allow-plugins": {
+      "ocramius/package-versions": true
+    }
   },
   "require": {
     "php": ">=7.2"
   },
   "require-dev": {
-    "wpdesk/wp-wpdesk-helper": "^2.3.4",
-    "wpdesk/wp-plugin-flow": "^2.4.0",
-    "humbug/php-scoper": "0.12.3"
+    "wpdesk/wp-plugin-flow": "^3.2.0",
+    "humbug/php-scoper": "0.12.3",
+    "wpdesk/wp-logs": "^1.10.0"
   },
   "autoload": {
     "psr-4": {

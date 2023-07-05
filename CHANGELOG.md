@@ -1,3 +1,8 @@
+## [1.3.0] - 2023-06-05
+### Changed
+- Plugin flow ^3
+- New license system
+
 ## [1.2.1] - 2020-07-10
 ### Fixed
 - Error in update request

@@ -12,6 +12,4 @@ $plugin_filename = ''; // Plugin main file - the one with the WordPress Docs
 $plugin_version  = get_file_data( WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $plugin_dir . DIRECTORY_SEPARATOR . $plugin_filename, array( 'Version' => 'Version' ), false )['Version'];
 
 
-\WPDesk\External\ExternalIntegration::integrate( $product_id, $plugin_dir, $plugin_filename, $plugin_version, function () {
-	// here you can put tje code to run when the plugin subscription is active.
-} );
+\WPDesk\External\ExternalIntegration::integrate( $product_id, $plugin_dir, $plugin_filename, $plugin_version );
