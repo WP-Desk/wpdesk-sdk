@@ -2,37 +2,27 @@
 
 namespace WPDesk\External;
 
-use WPDesk\License\PluginRegistrator;
-use WPDesk_Plugin_Info;
+use WPDesk\License\LicenseServer\PluginRegistrator;
+use WPDesk\License\LicenseServer\PluginVersionInfo;
 
-class ExternalIntegration {
-	/** @var WPDesk_Plugin_Info */
-	private $plugin_info;
+final class ExternalIntegration {
 
-	public function __construct( WPDesk_Plugin_Info $plugin_info ) {
+	private PluginVersionInfo $plugin_info;
+
+	private function __construct( PluginVersionInfo $plugin_info ) {
 		$this->plugin_info = $plugin_info;
 	}
 
-	/**
-	 * @param string $product_id
-	 * @param string $plugin_dir
-	 */
-	public static function integrate( $product_id, $plugin_dir, $filename, $plugin_version ) {
-		$external_plugin_info = new WPDesk_Plugin_Info();
-		$external_plugin_info->set_product_id( $product_id );
-		$external_plugin_info->set_plugin_dir( $plugin_dir );
-		$external_plugin_info->set_plugin_file_name( $filename );
-		$external_plugin_info->set_version( $plugin_version );
+	public static function integrate( string $product_id, string $plugin_dir, string $filename, string $plugin_version ): void {
+		$version_info = new PluginVersionInfo($product_id, $plugin_version, $product_id, basename($plugin_dir), $filename);
 
-		( new self( $external_plugin_info ) )->run_init();
+		( new self( $version_info ) )->run_init();
 	}
 
 	private function run_init(): void {
-		if ( apply_filters( 'wpdesk_can_register_plugin', true, $this->plugin_info ) ) {
+		add_action('plugins_loaded', function() {
 			$registrator = new PluginRegistrator( $this->plugin_info );
-			add_action('plugins_loaded', function() use ($registrator) {
-				$registrator->initialize_license_manager();
-			}, 9999);
-		}
+			$registrator->initialize_license_manager();
+		}, 9999);
 	}
 }
