@@ -2,24 +2,25 @@
   "name": "wpdesk/wpdesk-external-integration",
   "description": "",
   "type": "project",
+  "license": "proprietary",
   "config": {
     "allow-plugins": {
       "ocramius/package-versions": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true,
-      "wpdesk/wp-wpdesk-composer": true
+      "dealerdirect/phpcodesniffer-composer-installer": true
     },
     "gitlab-domains": [
       "gitlab.wpdesk.dev"
     ]
   },
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.4",
     "wpdesk/wp-wpdesk-license": "^4.1.0",
     "psr/log": "^1.1"
   },
   "require-dev": {
     "humbug/php-scoper": "0.18.9",
-    "wpdesk/wp-wpdesk-composer": "3.1.3"
+    "sniccowp/php-scoper-wordpress-excludes": "^6.9",
+    "wpdesk/php-scoper-woocommerce-excludes": "^9.3"
   },
   "autoload": {
     "classmap": [
@@ -32,18 +33,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "post-create-project-cmd": [
-      "WPDesk\\ExternalScripts\\BuilderScript::build_env",
-      "rm -rf ./wpdesk-integration",
-      "cp -f ./Reflector.php wpdesk-integration-vendor/humbug/php-scoper/src",
-      "./wpdesk-integration-vendor/bin/php-scoper add-prefix --output-dir=./wpdesk-integration -f",
-      "cp -f ./composer-integration.json wpdesk-integration/composer.json",
-      "composer install -d wpdesk-integration",
-      "composer dump -d wpdesk-integration -o",
-      "rm -rf ./wpdesk-integration/composer.json ./wpdesk-integration/composer.lock",
-      "WPDesk\\ExternalScripts\\BuilderScript::copy_to_plugin",
-      "WPDesk\\ExternalScripts\\BuilderScript::info"
-    ]
+    "post-create-project-cmd": "WPDesk\\ExternalScripts\\BuilderScript::postCreateProject"
   },
 	"repositories": {
 		"wpdesk": {
