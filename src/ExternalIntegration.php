@@ -1,38 +1,54 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace WPDesk\External;
 
-use WPDesk\License\PluginRegistrator;
-use WPDesk_Plugin_Info;
+use WPDesk\License\LicenseServer\PluginRegistrator;
+use WPDesk\License\LicenseServer\PluginVersionInfo;
 
-class ExternalIntegration {
-	/** @var WPDesk_Plugin_Info */
-	private $plugin_info;
+/**
+ * Connects a plugin runtime to the WP Desk license system.
+ */
+final class ExternalIntegration {
 
-	public function __construct( WPDesk_Plugin_Info $plugin_info ) {
+	private PluginVersionInfo $plugin_info;
+
+	private function __construct( PluginVersionInfo $plugin_info ) {
 		$this->plugin_info = $plugin_info;
 	}
 
-	/**
-	 * @param string $product_id
-	 * @param string $plugin_dir
-	 */
-	public static function integrate( $product_id, $plugin_dir, $filename, $plugin_version ) {
-		$external_plugin_info = new WPDesk_Plugin_Info();
-		$external_plugin_info->set_product_id( $product_id );
-		$external_plugin_info->set_plugin_dir( $plugin_dir );
-		$external_plugin_info->set_plugin_file_name( $filename );
-		$external_plugin_info->set_version( $plugin_version );
+	public static function integrate( string $product_id, string $plugin_file ): void {
+		$plugin_headers = \get_file_data(
+			$plugin_file,
+			[
+				'Name'    => 'Plugin Name',
+				'Version' => 'Version',
+			],
+			false
+		);
+		$plugin_basename = \plugin_basename( $plugin_file );
+		$plugin_slug     = \dirname( $plugin_basename );
 
-		( new self( $external_plugin_info ) )->run_init();
+		if ( $plugin_slug === '.' || $plugin_slug === '' ) {
+			$plugin_slug = \basename( $plugin_file, '.php' );
+		}
+
+		$version_info = new PluginVersionInfo(
+			$plugin_headers['Name'] ?: $product_id,
+			$plugin_headers['Version'] ?: '',
+			$product_id,
+			$plugin_slug,
+			$plugin_basename
+		);
+
+		( new self( $version_info ) )->run_init();
 	}
 
 	private function run_init(): void {
-		if ( apply_filters( 'wpdesk_can_register_plugin', true, $this->plugin_info ) ) {
+		\add_action( 'plugins_loaded', function (): void {
 			$registrator = new PluginRegistrator( $this->plugin_info );
-			add_action('plugins_loaded', function() use ($registrator) {
-				$registrator->initialize_license_manager();
-			}, 9999);
-		}
+			$registrator->initialize_license_manager();
+		}, 9999 );
 	}
 }
