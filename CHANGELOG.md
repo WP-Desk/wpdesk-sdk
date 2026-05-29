@@ -1,3 +1,7 @@
+## [2.0.1] - 2026-05-29
+### Changed
+- Removed WooCommerce excludes library from project as no WooCommerce functions are used.
+
 ## [2.0.0] - 2026-05-28
 ### Added
 - Interactive and automated PHP-based post-project creation builder (`BuilderScript`) replacing the legacy bash/manual setup scripts.
