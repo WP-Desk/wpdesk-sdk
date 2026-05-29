@@ -281,20 +281,12 @@ return [
 	'exclude-classes' => array_merge(
 		\$loadExcludes(\$vendorDir . '/sniccowp/php-scoper-wordpress-excludes/generated/exclude-wordpress-classes.json'),
 		\$loadExcludes(\$vendorDir . '/sniccowp/php-scoper-wordpress-excludes/generated/exclude-wordpress-interfaces.json'),
-		\$loadExcludes(\$vendorDir . '/wpdesk/php-scoper-woocommerce-excludes/generated/exclude-woocommerce-classes.json'),
-		\$loadExcludes(\$vendorDir . '/wpdesk/php-scoper-woocommerce-excludes/generated/exclude-woocommerce-interfaces.json'),
-		\$loadExcludes(\$vendorDir . '/wpdesk/php-scoper-woocommerce-excludes/generated/exclude-woocommerce-traits.json'),
-		\$loadExcludes(\$vendorDir . '/wpdesk/php-scoper-woocommerce-excludes/generated/exclude-woocommerce-packages-classes.json'),
-		\$loadExcludes(\$vendorDir . '/wpdesk/php-scoper-woocommerce-excludes/generated/exclude-woocommerce-packages-interfaces.json')
 	),
 	'exclude-functions' => array_merge(
 		\$loadExcludes(\$vendorDir . '/sniccowp/php-scoper-wordpress-excludes/generated/exclude-wordpress-functions.json'),
-		\$loadExcludes(\$vendorDir . '/wpdesk/php-scoper-woocommerce-excludes/generated/exclude-woocommerce-functions.json'),
-		\$loadExcludes(\$vendorDir . '/wpdesk/php-scoper-woocommerce-excludes/generated/exclude-woocommerce-packages-functions.json')
 	),
 	'exclude-constants' => array_merge(
 		\$loadExcludes(\$vendorDir . '/sniccowp/php-scoper-wordpress-excludes/generated/exclude-wordpress-constants.json'),
-		\$loadExcludes(\$vendorDir . '/wpdesk/php-scoper-woocommerce-excludes/generated/exclude-woocommerce-constants.json')
 	),
 	'finders' => [
 		Finder::create()

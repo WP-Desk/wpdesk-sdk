@@ -19,8 +19,7 @@
   },
   "require-dev": {
     "humbug/php-scoper": "0.18.9",
-    "sniccowp/php-scoper-wordpress-excludes": "^6.9",
-    "wpdesk/php-scoper-woocommerce-excludes": "^9.3"
+    "sniccowp/php-scoper-wordpress-excludes": "^6.9"
   },
   "autoload": {
     "classmap": [
