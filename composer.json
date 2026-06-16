@@ -2,7 +2,13 @@
   "name": "wpdesk/wpdesk-sdk",
   "description": "",
   "type": "project",
-  "license": "proprietary",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "WP Desk",
+      "homepage": "https://wpdesk.net/"
+    }
+  ],
   "config": {
     "allow-plugins": {
       "ocramius/package-versions": true,

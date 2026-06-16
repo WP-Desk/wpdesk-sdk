@@ -60,23 +60,20 @@ final class BuilderScript {
 	 */
 	private static function collect_context( IOInterface $io, string $project_dir ): array {
 		if ( basename( $project_dir ) !== 'wpdesk-integration' ) {
-			throw new RuntimeException( 'Run this from a plugin root with: composer create-project wpdesk/wpdesk-external-integration wpdesk-integration --remove-vcs' );
+			throw new RuntimeException( 'Run this from a plugin root with: composer create-project wpdesk/wpdesk-sdk wpdesk-integration --remove-vcs' );
 		}
 
 		$plugin_root = self::normalize_path( dirname( $project_dir ) );
 		$plugin_slug = basename( $plugin_root );
 		$plugin_file = self::resolve_plugin_file( $io, $plugin_root, $plugin_slug );
 		$plugin_name = self::read_plugin_name( $plugin_root . DIRECTORY_SEPARATOR . $plugin_file ) ?: $plugin_slug;
-		$product_id = trim( (string) $io->ask( 'WP Desk product ID [' . $plugin_name . '] (must match WP Desk licensing): ', $plugin_name ) );
-		if ( $product_id === '' ) {
-			throw new RuntimeException( 'Product ID cannot be empty.' );
-		}
 		$prefix = self::detect_prefix( $plugin_root, $plugin_slug );
+		$io->write( 'Using WP Desk product name: ' . $plugin_name );
 		$io->write( 'Using PHP namespace prefix: ' . $prefix );
 
 		return [
 			'plugin_file' => $plugin_file,
-			'product_id'  => $product_id,
+			'product_id'  => $plugin_name,
 			'prefix'      => $prefix,
 		];
 	}
@@ -318,7 +315,7 @@ PHP;
 	private static function create_runtime_composer_json(): string {
 		return <<<JSON
 {
-  "name": "wpdesk/wpdesk-external-integration-runtime",
+  "name": "wpdesk/wpdesk-sdk-runtime",
   "description": "Generated WP Desk external integration runtime bundle.",
   "type": "library",
   "autoload": {

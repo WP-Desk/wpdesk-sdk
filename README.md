@@ -26,23 +26,18 @@ Dodatkowo, w głównym katalogu wtyczki musi znajdować się plik `changelog.txt
 Przejdź w terminalu do **głównego katalogu swojej wtyczki** (np. `wp-content/plugins/moja-wtyczka/`) i wykonaj poniższe polecenie:
 
 ```bash
-composer create-project wpdesk/wpdesk-external-integration wpdesk-integration
+composer create-project wpdesk/wpdesk-sdk wpdesk-integration
 ```
 
 > [!IMPORTANT]
 > Docelowy katalog **musi** nazywać się dokładnie `wpdesk-integration`. Skrypt instalacyjny wymaga tej nazwy do poprawnego działania.
 
-### Krok 2: Konfiguracja interaktywna
-Instalator automatycznie przeanalizuje wtyczkę, wykryje główny plik PHP oraz przygotuje unikalną przestrzeń nazw dla zależności (na podstawie pliku `composer.json` lub nazwy katalogu).
-
-Zostaniesz poproszony o:
-1. **WP Desk product ID** – podaj unikalny identyfikator produktu uzgodniony z WP Desk (domyślnie sugerowana jest nazwa wtyczki odczytana z nagłówków pliku głównego).
-2. *Opcjonalnie:* Jeśli wtyczka posiada wiele plików z nagłówkiem `Plugin Name` w katalogu głównym, instalator poprosi o wskazanie, który z nich jest plikiem głównym.
+Instalator przeanalizuje wtyczkę i przygotuje paczkę integracyjną. Jeśli wtyczka posiada wiele plików z nagłówkiem `Plugin Name` w katalogu głównym, instalator poprosi o wskazanie, który z nich jest plikiem głównym.
 
 Po zakończeniu konfiguracji i budowania, skrypt automatycznie usunie pliki instalatora, pozostawiając w katalogu `wpdesk-integration` wyłącznie gotową, zoptymalizowaną paczkę produkcyjną.
 
-### Krok 3: Dołączenie integracji w kodzie wtyczki
-W głównym pliku swojej wtyczki (tym z nagłówkami WordPressa) dodaj następującą linię kodu:
+### Krok 2: Dołączenie integracji w kodzie wtyczki
+W głównym pliku swojej wtyczki dodaj następującą linię kodu:
 
 ```php
 require_once __DIR__ . '/wpdesk-integration/wpdesk-integration.php';

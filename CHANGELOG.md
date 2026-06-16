@@ -1,3 +1,8 @@
+## [2.0.2] - 2026-06-16
+### Changed
+- Builder now uses the detected WordPress `Plugin Name` header as the WP Desk product value instead of asking integrators for a separate product ID.
+- Licensed as MIT.
+
 ## [2.0.1] - 2026-05-29
 ### Changed
 - Removed WooCommerce excludes library from project as no WooCommerce functions are used.
