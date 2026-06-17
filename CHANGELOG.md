@@ -1,3 +1,7 @@
+## [2.0.3] - 2026-06-17
+### Fixed
+- Remove `composer.lock` file from repository.
+
 ## [2.0.2] - 2026-06-16
 ### Changed
 - Builder now uses the detected WordPress `Plugin Name` header as the WP Desk product value instead of asking integrators for a separate product ID.
